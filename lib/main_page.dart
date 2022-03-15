@@ -28,7 +28,10 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: Colors.white,
         title: Padding(
           padding: const EdgeInsets.all(40.0),
-          child: Image.network(Constants.instagramLogoUrl),
+          child: Hero(
+            tag: "InstaLogo",
+            child: Image.network(Constants.instagramLogoUrl),
+          ),
         ),
       ),
       body: Center(
@@ -36,6 +39,12 @@ class _MainPageState extends State<MainPage> {
           children: buildImagesList(),
         ),
       ),
+    );
+  }
+
+  ListView buildListView() {
+    return ListView(
+      children: buildImagesList(),
     );
   }
 
@@ -61,6 +70,20 @@ class _MainPageState extends State<MainPage> {
           ],
         );
       },
+    );
+
+    list.first = Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: SizedBox(
+            height: 200,
+            width: 410,
+            child: Image.network(
+                'https://i.ytimg.com/vi/SwgEhz3nwv8/maxresdefault.jpg'),
+          ),
+        ),
+      ],
     );
 
     return list;

@@ -52,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
           border: UnderlineInputBorder(), labelText: 'Putina login'),
     );
     var password = TextFormField(
+      obscureText: true,
       decoration: const InputDecoration(
           border: UnderlineInputBorder(), labelText: 'Putina password'),
     );
@@ -63,28 +64,33 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(paddingSize),
-              child: imageLogo,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(paddingSize),
-              child: login,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(paddingSize),
-              child: password,
-            ),
-            FlatButton(
-              onPressed: onLoginClicked,
-              child: Text('Login kurwa'),
-              color: Colors.blue,
-              textColor: Colors.white,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(paddingSize),
+                child: Hero(
+                  tag: "InstaLogo",
+                  child: imageLogo,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(paddingSize),
+                child: login,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(paddingSize),
+                child: password,
+              ),
+              FlatButton(
+                onPressed: onLoginClicked,
+                child: Text('Login kurwa'),
+                color: Colors.blue,
+                textColor: Colors.white,
+              ),
+            ],
+          ),
         ),
       ),
     );
