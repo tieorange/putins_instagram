@@ -78,24 +78,32 @@ class _MainPageState extends State<MainPage> {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final item = data[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Center(
-                                      child: SvgJpgCachedImage(item: item),
-                                    ),
-                                    Text(item.name),
-                                  ],
-                                ),
-                                Text("Price: ${item.price} \$"),
-                              ],
-                            ),
+                      return Card(
+                        margin: const EdgeInsets.all(10),
+                        color: Colors.amber[50],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 16.0),
+                                    child: SvgJpgCachedImage(item: item),
+                                  ),
+                                  Text("${item.symbol} - ", style: const TextStyle(fontSize: 16)),
+                                  Text(item.name , style: const TextStyle(fontSize: 16)),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16.0),
+                                    child: Text("Price: ${item.price} \$", style: const TextStyle(fontSize: 16)),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       );
@@ -128,55 +136,6 @@ class _MainPageState extends State<MainPage> {
       },
     );
   }
-
-  ListView buildListView() {
-    return ListView(
-      children: buildImagesList(),
-    );
-  }
-
-  Random random = Random();
-
-  List<Widget> buildImagesList() {
-    final list = List.generate(
-      30,
-      (index) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: SizedBox(
-                height: 200,
-                width: 410,
-                child: Image.network(
-                  'https://picsum.photos/${getNextImageSizeRandom()}',
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-
-    list.first = Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: SizedBox(
-            height: 200,
-            width: 410,
-            child: Image.network(
-                'https://i.ytimg.com/vi/SwgEhz3nwv8/maxresdefault.jpg'),
-          ),
-        ),
-      ],
-    );
-
-    return list;
-  }
-
-  int getNextImageSizeRandom() => random.nextInt(150) + 100;
 }
 
 class SvgJpgCachedImage extends StatelessWidget {
@@ -193,21 +152,33 @@ class SvgJpgCachedImage extends StatelessWidget {
     if (!url.endsWith("svg")) {
       return CachedNetworkImage(
         imageUrl: url,
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 40,
+        placeholder: (context, url) => const SvgJpgCachedImagePlaceholder(),
       );
     }
 
     return SvgPicture.network(
       url,
-      width: 30,
-      height: 30,
+      width: 40,
+      height: 40,
       semanticsLabel: 'A shark?!',
-      placeholderBuilder: (BuildContext context) => Container(
-          width: 30,
-          height: 30,
-          padding: const EdgeInsets.all(30.0),
-          child: const CircularProgressIndicator()),
+      placeholderBuilder: (BuildContext context) => const SvgJpgCachedImagePlaceholder(),
     );
+  }
+}
+
+class SvgJpgCachedImagePlaceholder extends StatelessWidget {
+  const SvgJpgCachedImagePlaceholder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 40,
+        height: 40,
+        padding: const EdgeInsets.all(30.0),
+        child: const CircularProgressIndicator());
   }
 }
