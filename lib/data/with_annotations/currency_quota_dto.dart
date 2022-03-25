@@ -1,6 +1,6 @@
-import 'package:json_annotation/json_annotation.dart'; 
+import 'package:json_annotation/json_annotation.dart';
 
-part 'currency_quota_dto.g.dart'; 
+part 'currency_quota_dto.g.dart';
 
 @JsonSerializable(ignoreUnannotated: false)
 class CurrencyQuotaDto {
@@ -22,10 +22,6 @@ class CurrencyQuotaDto {
   String priceDate;
   @JsonKey(name: 'price_timestamp')
   String priceTimestamp;
-  @JsonKey(name: 'circulating_supply')
-  String circulatingSupply;
-  @JsonKey(name: 'max_supply')
-  String maxSupply;
   @JsonKey(name: 'market_cap')
   String marketCap;
   @JsonKey(name: 'market_cap_dominance')
@@ -53,11 +49,39 @@ class CurrencyQuotaDto {
   @JsonKey(name: 'ytd')
   Ytd ytd;
 
-  CurrencyQuotaDto({required this.id, required this.currency, required this.symbol, required this.name, required this.logoUrl, required this.status, required this.price, required this.priceDate, required this.priceTimestamp, required this.circulatingSupply, required this.maxSupply, required this.marketCap, required this.marketCapDominance, required this.numExchanges, required this.numPairs, required this.numPairsUnmapped, required this.firstCandle, required this.firstTrade, required this.firstOrderBook, required this.rank, required this.rankDelta, required this.high, required this.highTimestamp, required this.ytd});
+  CurrencyQuotaDto(
+      {required this.id,
+      required this.currency,
+      required this.symbol,
+      required this.name,
+      required this.logoUrl,
+      required this.status,
+      required this.price,
+      required this.priceDate,
+      required this.priceTimestamp,
+      required this.marketCap,
+      required this.marketCapDominance,
+      required this.numExchanges,
+      required this.numPairs,
+      required this.numPairsUnmapped,
+      required this.firstCandle,
+      required this.firstTrade,
+      required this.firstOrderBook,
+      required this.rank,
+      required this.rankDelta,
+      required this.high,
+      required this.highTimestamp,
+      required this.ytd});
 
-   factory CurrencyQuotaDto.fromJson(Map<String, dynamic> json) => _$CurrencyQuotaDtoFromJson(json);
+  factory CurrencyQuotaDto.fromJson(Map<String, dynamic> json) =>
+      _$CurrencyQuotaDtoFromJson(json);
 
-   Map<String, dynamic> toJson() => _$CurrencyQuotaDtoToJson(this);
+  Map<String, dynamic> toJson() => _$CurrencyQuotaDtoToJson(this);
+
+  @override
+  String toString() {
+    return 'CurrencyQuotaDto{name: $name, price: $price}';
+  }
 }
 
 @JsonSerializable(ignoreUnannotated: false)
@@ -77,10 +101,16 @@ class Ytd {
   @JsonKey(name: 'market_cap_change_pct')
   String marketCapChangePct;
 
-  Ytd({required this.volume, required this.priceChange, required this.priceChangePct, required this.volumeChange, required this.volumeChangePct, required this.marketCapChange, required this.marketCapChangePct});
+  Ytd(
+      {required this.volume,
+      required this.priceChange,
+      required this.priceChangePct,
+      required this.volumeChange,
+      required this.volumeChangePct,
+      required this.marketCapChange,
+      required this.marketCapChangePct});
 
-   factory Ytd.fromJson(Map<String, dynamic> json) => _$YtdFromJson(json);
+  factory Ytd.fromJson(Map<String, dynamic> json) => _$YtdFromJson(json);
 
-   Map<String, dynamic> toJson() => _$YtdToJson(this);
+  Map<String, dynamic> toJson() => _$YtdToJson(this);
 }
-

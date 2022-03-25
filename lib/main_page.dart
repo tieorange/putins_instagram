@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:putins_instagram/constants.dart';
 import 'package:putins_instagram/repo/currency_quota_repository.dart';
 
@@ -25,14 +26,6 @@ class ConsumeApi {
   static const _currencyConvertTo = "USD";
 
   static Future<List<CurrencyQuotaDto>> getData() {
-    int a = 5;
-
-
-
-    // sdfdsf
-
-
-
     RestClient client = RestClient(_dio);
     return client.getCurrenciesTicker(
       _apiKey,
@@ -44,6 +37,8 @@ class ConsumeApi {
 }
 
 class _MainPageState extends State<MainPage> {
+  static final logger = Logger();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,14 +56,65 @@ class _MainPageState extends State<MainPage> {
         child: FutureBuilder<List<CurrencyQuotaDto>>(
           future: ConsumeApi.getData(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Text("loading...");
-            } else {
-              return Text(snapshot.data!.first.price.toString());
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Text('Loading....');
+              default:
+                if (snapshot.hasError) {
+                  _MainPageState.logger.d(snapshot.error);
+                  return Text("Error: ${snapshot.error}");
+                } else {
+                  var data = snapshot.data ?? List.empty();
+                  _MainPageState.logger.d(data);
+
+                  final list = ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        final item = data[index];
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 30,
+                                  child: Image.network(item.logoUrl),
+                                ),
+                                Text(item.name),
+                                Text(item.price)
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+
+                  return list;
+                }
             }
           },
         ),
+        // child: Text("test"),
       ),
+    );
+  }
+
+  FutureBuilder<List<CurrencyQuotaDto>> buildFutureBuilder() {
+    return FutureBuilder<List<CurrencyQuotaDto>>(
+      future: ConsumeApi.getData(),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return const Text('Loading....');
+          default:
+            if (snapshot.hasError) {
+              logger.d(snapshot.error);
+              return Text("Error: ${snapshot.error}");
+            } else {
+              logger.d(snapshot.data);
+              return Text(snapshot.data!.first.price.toString());
+            }
+        }
+      },
     );
   }
 
