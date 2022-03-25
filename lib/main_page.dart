@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
 import 'package:putins_instagram/constants.dart';
 import 'package:putins_instagram/repo/currency_quota_repository.dart';
@@ -22,6 +23,7 @@ class ConsumeApi {
 
   static const _apiKey = "d5dd8edb26dc5f55601c691bfa0902e4e08384ad";
   static const _currenciesIds = "";
+
   // static const _currenciesIds = "BTC,ETH,XRP,SOL,BNB";
   // static const _currenciesIds = "BTC,ETH,XRP,SOL";
   static const _priceInterval = "ytd";
@@ -40,7 +42,6 @@ class ConsumeApi {
 
 class _MainPageState extends State<MainPage> {
   static final logger = Logger();
-
 
   /*@override
   initState(){
@@ -62,11 +63,11 @@ class _MainPageState extends State<MainPage> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return const Text('Loading....');
+              return const Center(child: Text('Loading....'));
             default:
               if (snapshot.hasError) {
                 _MainPageState.logger.d(snapshot.error);
-                return Text("Error: ${snapshot.error}");
+                return Center(child: Text("Error: ${snapshot.error}"));
               } else {
                 var data = snapshot.data ?? List.empty();
                 _MainPageState.logger.d(data);
@@ -82,10 +83,21 @@ class _MainPageState extends State<MainPage> {
                             children: [
                               Row(
                                 children: [
-                                  SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: Image.network(item.logoUrl),
+                                  Center(
+                                    child: SvgPicture.network(
+                                      item.logoUrl,
+                                      width: 30,
+                                      height: 30,
+                                      semanticsLabel: 'A shark?!',
+                                      placeholderBuilder:
+                                          (BuildContext context) => Container(
+                                              width: 30,
+                                              height: 30,
+                                              padding:
+                                                  const EdgeInsets.all(30.0),
+                                              child:
+                                                  const CircularProgressIndicator()),
+                                    ),
                                   ),
                                   Text(item.name),
                                 ],
