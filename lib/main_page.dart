@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,7 +57,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.deepPurple,
+        title: const Text("Crypto Scanner"),
       ),
       body: FutureBuilder<List<CurrencyQuotaDto>>(
         future: ConsumeApi.getData(),
@@ -76,34 +78,24 @@ class _MainPageState extends State<MainPage> {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final item = data[index];
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Center(
-                                    child: SvgPicture.network(
-                                      item.logoUrl,
-                                      width: 30,
-                                      height: 30,
-                                      semanticsLabel: 'A shark?!',
-                                      placeholderBuilder:
-                                          (BuildContext context) => Container(
-                                              width: 30,
-                                              height: 30,
-                                              padding:
-                                                  const EdgeInsets.all(30.0),
-                                              child:
-                                                  const CircularProgressIndicator()),
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Center(
+                                      child: SvgJpgCachedImage(item: item),
                                     ),
-                                  ),
-                                  Text(item.name),
-                                ],
-                              ),
-                              Text("Price: ${item.price} \$"),
-                            ],
+                                    Text(item.name),
+                                  ],
+                                ),
+                                Text("Price: ${item.price} \$"),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -185,4 +177,37 @@ class _MainPageState extends State<MainPage> {
   }
 
   int getNextImageSizeRandom() => random.nextInt(150) + 100;
+}
+
+class SvgJpgCachedImage extends StatelessWidget {
+  const SvgJpgCachedImage({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
+
+  final CurrencyQuotaDto item;
+
+  @override
+  Widget build(BuildContext context) {
+    var url = item.logoUrl;
+    if (!url.endsWith("svg")) {
+      return CachedNetworkImage(
+        imageUrl: url,
+        width: 30,
+        height: 30,
+      );
+    }
+
+    return SvgPicture.network(
+      url,
+      width: 30,
+      height: 30,
+      semanticsLabel: 'A shark?!',
+      placeholderBuilder: (BuildContext context) => Container(
+          width: 30,
+          height: 30,
+          padding: const EdgeInsets.all(30.0),
+          child: const CircularProgressIndicator()),
+    );
+  }
 }

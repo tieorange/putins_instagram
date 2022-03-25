@@ -80,7 +80,8 @@ class CurrencyQuotaDto {
 
   @override
   String toString() {
-    return 'CurrencyQuotaDto{name: $name, price: $price}';
+    return "CurrencyQuotaDto{name: $name, price: $price "
+        "URL: $logoUrl}";
   }
 }
 
