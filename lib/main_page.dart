@@ -21,7 +21,9 @@ class ConsumeApi {
   static final _dio = Dio();
 
   static const _apiKey = "d5dd8edb26dc5f55601c691bfa0902e4e08384ad";
-  static const _currenciesIds = "BTC,ETH,XRP,SOL";
+  static const _currenciesIds = "BTC,ETH,XRP,SOL,BNB";
+  // static const _currenciesIds = "BTC,ETH,XRP,SOL,BNB";
+  // static const _currenciesIds = "BTC,ETH,XRP,SOL";
   static const _priceInterval = "ytd";
   static const _currencyConvertTo = "USD";
 
@@ -44,56 +46,51 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Padding(
-          padding: const EdgeInsets.all(40.0),
-          child: Hero(
-            tag: "InstaLogo",
-            child: Image.network(Constants.instagramLogoUrl),
-          ),
-        ),
       ),
-      body: Center(
-        child: FutureBuilder<List<CurrencyQuotaDto>>(
-          future: ConsumeApi.getData(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Text('Loading....');
-              default:
-                if (snapshot.hasError) {
-                  _MainPageState.logger.d(snapshot.error);
-                  return Text("Error: ${snapshot.error}");
-                } else {
-                  var data = snapshot.data ?? List.empty();
-                  _MainPageState.logger.d(data);
+      body: FutureBuilder<List<CurrencyQuotaDto>>(
+        future: ConsumeApi.getData(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Text('Loading....');
+            default:
+              if (snapshot.hasError) {
+                _MainPageState.logger.d(snapshot.error);
+                return Text("Error: ${snapshot.error}");
+              } else {
+                var data = snapshot.data ?? List.empty();
+                _MainPageState.logger.d(data);
 
-                  final list = ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        final item = data[index];
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 30,
-                                  child: Image.network(item.logoUrl),
-                                ),
-                                Text(item.name),
-                                Text(item.price)
-                              ],
-                            ),
+                final list = ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final item = data[index];
+                      return Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: Image.network(item.logoUrl),
+                                  ),
+                                  Text(item.name),
+                                ],
+                              ),
+                              Text("Price: ${item.price} \$"),
+                            ],
                           ),
-                        );
-                      });
+                        ),
+                      );
+                    });
 
-                  return list;
-                }
-            }
-          },
-        ),
-        // child: Text("test"),
+                return list;
+              }
+          }
+        },
       ),
     );
   }
