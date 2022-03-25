@@ -70,13 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(paddingSize),
-                child: Hero(
-                  tag: "InstaLogo",
-                  child: imageLogo,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(paddingSize),
                 child: login,
               ),
               Padding(

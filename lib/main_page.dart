@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -78,6 +79,9 @@ class _MainPageState extends State<MainPage> {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final item = data[index];
+                      var price2 = double.parse(item.price);
+                      String price = price2.toPrecision(3).toString();
+
                       return Card(
                         margin: const EdgeInsets.all(10),
                         color: Colors.amber[50],
@@ -91,7 +95,7 @@ class _MainPageState extends State<MainPage> {
                                     padding: const EdgeInsets.only(right: 16.0),
                                     child: SvgJpgCachedImage(item: item),
                                   ),
-                                  Text("${item.symbol} - ", style: const TextStyle(fontSize: 16)),
+                                  Text("${item.symbol} - ", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                                   Text(item.name , style: const TextStyle(fontSize: 16)),
                                 ],
                               ),
@@ -99,7 +103,12 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 16.0),
-                                    child: Text("Price: ${item.price} \$", style: const TextStyle(fontSize: 16)),
+                                    child: Row(
+                                      children: [
+                                        Text("Price: ", style: const TextStyle(fontSize: 16)),
+                                        Text("${price} \$", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -114,26 +123,6 @@ class _MainPageState extends State<MainPage> {
           }
         },
       ),
-    );
-  }
-
-  FutureBuilder<List<CurrencyQuotaDto>> buildFutureBuilder() {
-    return FutureBuilder<List<CurrencyQuotaDto>>(
-      future: ConsumeApi.getData(),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return const Text('Loading....');
-          default:
-            if (snapshot.hasError) {
-              logger.d(snapshot.error);
-              return Text("Error: ${snapshot.error}");
-            } else {
-              logger.d(snapshot.data);
-              return Text(snapshot.data!.first.price.toString());
-            }
-        }
-      },
     );
   }
 }
@@ -181,4 +170,8 @@ class SvgJpgCachedImagePlaceholder extends StatelessWidget {
         padding: const EdgeInsets.all(30.0),
         child: const CircularProgressIndicator());
   }
+}
+
+extension RoundDouble on double {
+  double toPrecision(int n) => double.parse(toStringAsFixed(n));
 }
