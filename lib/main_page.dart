@@ -21,7 +21,7 @@ class ConsumeApi {
   static final _dio = Dio();
 
   static const _apiKey = "d5dd8edb26dc5f55601c691bfa0902e4e08384ad";
-  static const _currenciesIds = "BTC,ETH,XRP,SOL,BNB";
+  static const _currenciesIds = "";
   // static const _currenciesIds = "BTC,ETH,XRP,SOL,BNB";
   // static const _currenciesIds = "BTC,ETH,XRP,SOL";
   static const _priceInterval = "ytd";
@@ -40,6 +40,16 @@ class ConsumeApi {
 
 class _MainPageState extends State<MainPage> {
   static final logger = Logger();
+
+
+  /*@override
+  initState(){
+    name();
+  }
+
+  Future<void> name() async {
+    await ConsumeApi.getData();
+  }*/
 
   @override
   Widget build(BuildContext context) {

@@ -64,10 +64,6 @@ Ytd _$YtdFromJson(Map<String, dynamic> json) {
     volume: json['volume'] as String,
     priceChange: json['price_change'] as String,
     priceChangePct: json['price_change_pct'] as String,
-    volumeChange: json['volume_change'] as String,
-    volumeChangePct: json['volume_change_pct'] as String,
-    marketCapChange: json['market_cap_change'] as String,
-    marketCapChangePct: json['market_cap_change_pct'] as String,
   );
 }
 
@@ -75,8 +71,4 @@ Map<String, dynamic> _$YtdToJson(Ytd instance) => <String, dynamic>{
       'volume': instance.volume,
       'price_change': instance.priceChange,
       'price_change_pct': instance.priceChangePct,
-      'volume_change': instance.volumeChange,
-      'volume_change_pct': instance.volumeChangePct,
-      'market_cap_change': instance.marketCapChange,
-      'market_cap_change_pct': instance.marketCapChangePct,
     };

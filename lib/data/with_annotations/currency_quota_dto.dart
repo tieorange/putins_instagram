@@ -92,23 +92,11 @@ class Ytd {
   String priceChange;
   @JsonKey(name: 'price_change_pct')
   String priceChangePct;
-  @JsonKey(name: 'volume_change')
-  String volumeChange;
-  @JsonKey(name: 'volume_change_pct')
-  String volumeChangePct;
-  @JsonKey(name: 'market_cap_change')
-  String marketCapChange;
-  @JsonKey(name: 'market_cap_change_pct')
-  String marketCapChangePct;
 
   Ytd(
       {required this.volume,
       required this.priceChange,
-      required this.priceChangePct,
-      required this.volumeChange,
-      required this.volumeChangePct,
-      required this.marketCapChange,
-      required this.marketCapChangePct});
+      required this.priceChangePct,});
 
   factory Ytd.fromJson(Map<String, dynamic> json) => _$YtdFromJson(json);
 
