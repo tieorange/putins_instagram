@@ -79,15 +79,15 @@ class _MainPageState extends State<MainPage> {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final item = data[index];
-                      var price2 = double.parse(item.price);
-                      String price = price2.toPrecision(3).toString();
+                      String price = item.price.toPrecision(3).toString();
+                      String high = item.high.toPrecision(3).toString();
 
                       return Card(
-                        margin: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.all(12),
                         color: Colors.amber[50],
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Column(
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -95,8 +95,13 @@ class _MainPageState extends State<MainPage> {
                                     padding: const EdgeInsets.only(right: 16.0),
                                     child: SvgJpgCachedImage(item: item),
                                   ),
-                                  Text("${item.symbol} - ", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                  Text(item.name , style: const TextStyle(fontSize: 16)),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(item.symbol, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                      Text(item.name , style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
                                 ],
                               ),
                               Row(
@@ -106,12 +111,13 @@ class _MainPageState extends State<MainPage> {
                                     child: Row(
                                       children: [
                                         Text("Price: ", style: const TextStyle(fontSize: 16)),
-                                        Text("${price} \$", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                        Text("$price\$", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
+                              Text("Highest: $high", style: const TextStyle(fontStyle: FontStyle.italic)),
                             ],
                           ),
                         ),
@@ -172,6 +178,9 @@ class SvgJpgCachedImagePlaceholder extends StatelessWidget {
   }
 }
 
-extension RoundDouble on double {
-  double toPrecision(int n) => double.parse(toStringAsFixed(n));
+extension RoundDouble on String {
+  double toPrecision(int precision) {
+    var doubleValue = double.parse(this);
+    return double.parse(doubleValue.toStringAsFixed(precision));
+  }
 }
