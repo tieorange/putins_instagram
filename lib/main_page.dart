@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:putins_instagram/constants.dart';
 import 'package:putins_instagram/repo/currency_quota_repository.dart';
@@ -79,15 +80,19 @@ class _MainPageState extends State<MainPage> {
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final item = data[index];
+
                       String price = item.price.toPrecision(3).toString();
                       String high = item.high.toPrecision(3).toString();
+                      String dateHigh =
+                          DateTime.parse(item.highTimestamp).formatDDMMYY();
 
                       return Card(
                         margin: const EdgeInsets.all(12),
                         color: Colors.amber[50],
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -96,28 +101,61 @@ class _MainPageState extends State<MainPage> {
                                     child: SvgJpgCachedImage(item: item),
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(item.symbol, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                      Text(item.name , style: const TextStyle(fontSize: 16)),
+                                      Text(item.symbol,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
+                                      Text(item.name,
+                                          style: const TextStyle(fontSize: 16)),
                                     ],
                                   ),
                                 ],
                               ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: Chip(
+                                  backgroundColor: Colors.green[50],
+                                  label: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(Icons.paid, size: 25),
+                                      Text(
+                                        " Price: $price",
+                                        style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(height: 8),
                               Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 16.0),
-                                    child: Row(
-                                      children: [
-                                        Text("Price: ", style: const TextStyle(fontSize: 16)),
-                                        Text("$price\$", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                      ],
-                                    ),
+                                  const Icon(Icons.arrow_upward, size: 25),
+                                  Text(
+                                    "Highest: $high ($dateHigh)",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontStyle: FontStyle.italic),
                                   ),
                                 ],
                               ),
-                              Text("Highest: $high", style: const TextStyle(fontStyle: FontStyle.italic)),
+                              Container(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Icons.all_inclusive, size: 25),
+                                  Text(
+                                    "Market cap: ${item.marketCap}\$",
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontStyle: FontStyle.italic),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -158,7 +196,8 @@ class SvgJpgCachedImage extends StatelessWidget {
       width: 40,
       height: 40,
       semanticsLabel: 'A shark?!',
-      placeholderBuilder: (BuildContext context) => const SvgJpgCachedImagePlaceholder(),
+      placeholderBuilder: (BuildContext context) =>
+          const SvgJpgCachedImagePlaceholder(),
     );
   }
 }
@@ -183,4 +222,8 @@ extension RoundDouble on String {
     var doubleValue = double.parse(this);
     return double.parse(doubleValue.toStringAsFixed(precision));
   }
+}
+
+extension DateTimeExtension on DateTime {
+  String formatDDMMYY() => "$day.$month.$year";
 }
