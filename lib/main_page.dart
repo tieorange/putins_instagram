@@ -88,7 +88,6 @@ class _MainPageState extends State<MainPage> {
 
                       return Card(
                         margin: const EdgeInsets.all(12),
-                        color: Colors.amber[50],
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
@@ -100,18 +99,12 @@ class _MainPageState extends State<MainPage> {
                                     padding: const EdgeInsets.only(right: 16.0),
                                     child: SvgJpgCachedImage(item: item),
                                   ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(item.symbol,
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
-                                      Text(item.name,
-                                          style: const TextStyle(fontSize: 16)),
-                                    ],
-                                  ),
+                                  Text("${item.symbol} - ",
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                  Text(item.name,
+                                      style: const TextStyle(fontSize: 16)),
                                 ],
                               ),
                               Padding(
@@ -137,7 +130,7 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   const Icon(Icons.arrow_upward, size: 25),
                                   Text(
-                                    "Highest: $high ($dateHigh)",
+                                    " Highest: $high ($dateHigh)",
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontStyle: FontStyle.italic),
@@ -149,7 +142,7 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   const Icon(Icons.all_inclusive, size: 25),
                                   Text(
-                                    "Market cap: ${item.marketCap}\$",
+                                    " Market cap: ${item.marketCap}\$",
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontStyle: FontStyle.italic),
