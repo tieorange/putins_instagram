@@ -6,32 +6,31 @@ part of 'currency_quota_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CurrencyQuotaDto _$CurrencyQuotaDtoFromJson(Map<String, dynamic> json) {
-  return CurrencyQuotaDto(
-    id: json['id'] as String,
-    currency: json['currency'] as String,
-    symbol: json['symbol'] as String,
-    name: json['name'] as String,
-    logoUrl: json['logo_url'] as String,
-    status: json['status'] as String,
-    price: json['price'] as String,
-    priceDate: json['price_date'] as String,
-    priceTimestamp: json['price_timestamp'] as String,
-    marketCap: json['market_cap'] as String,
-    marketCapDominance: json['market_cap_dominance'] as String,
-    numExchanges: json['num_exchanges'] as String,
-    numPairs: json['num_pairs'] as String,
-    numPairsUnmapped: json['num_pairs_unmapped'] as String,
-    firstCandle: json['first_candle'] as String,
-    firstTrade: json['first_trade'] as String,
-    firstOrderBook: json['first_order_book'] as String,
-    rank: json['rank'] as String,
-    rankDelta: json['rank_delta'] as String,
-    high: json['high'] as String,
-    highTimestamp: json['high_timestamp'] as String,
-    ytd: Ytd.fromJson(json['ytd'] as Map<String, dynamic>),
-  );
-}
+CurrencyQuotaDto _$CurrencyQuotaDtoFromJson(Map<String, dynamic> json) =>
+    CurrencyQuotaDto(
+      id: json['id'] as String,
+      currency: json['currency'] as String,
+      symbol: json['symbol'] as String,
+      name: json['name'] as String,
+      logoUrl: json['logo_url'] as String,
+      status: json['status'] as String,
+      price: json['price'] as String,
+      priceDate: json['price_date'] as String,
+      priceTimestamp: json['price_timestamp'] as String,
+      marketCap: json['market_cap'] as String,
+      marketCapDominance: json['market_cap_dominance'] as String,
+      numExchanges: json['num_exchanges'] as String,
+      numPairs: json['num_pairs'] as String,
+      numPairsUnmapped: json['num_pairs_unmapped'] as String,
+      firstCandle: json['first_candle'] as String,
+      firstTrade: json['first_trade'] as String,
+      firstOrderBook: json['first_order_book'] as String,
+      rank: json['rank'] as String,
+      rankDelta: json['rank_delta'] as String,
+      high: json['high'] as String,
+      highTimestamp: json['high_timestamp'] as String,
+      ytd: Ytd.fromJson(json['ytd'] as Map<String, dynamic>),
+    );
 
 Map<String, dynamic> _$CurrencyQuotaDtoToJson(CurrencyQuotaDto instance) =>
     <String, dynamic>{
@@ -59,13 +58,11 @@ Map<String, dynamic> _$CurrencyQuotaDtoToJson(CurrencyQuotaDto instance) =>
       'ytd': instance.ytd,
     };
 
-Ytd _$YtdFromJson(Map<String, dynamic> json) {
-  return Ytd(
-    volume: json['volume'] as String,
-    priceChange: json['price_change'] as String,
-    priceChangePct: json['price_change_pct'] as String,
-  );
-}
+Ytd _$YtdFromJson(Map<String, dynamic> json) => Ytd(
+      volume: json['volume'] as String,
+      priceChange: json['price_change'] as String,
+      priceChangePct: json['price_change_pct'] as String,
+    );
 
 Map<String, dynamic> _$YtdToJson(Ytd instance) => <String, dynamic>{
       'volume': instance.volume,
