@@ -86,79 +86,99 @@ class _MainPageState extends State<MainPage> {
                       String dateHigh =
                           DateTime.parse(item.highTimestamp).formatDDMMYY();
 
-                      return Card(
-                        margin: const EdgeInsets.all(12),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 16.0),
-                                    child: SvgJpgCachedImage(item: item),
-                                  ),
-                                  Text("${item.symbol} - ",
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold)),
-                                  Text(item.name,
-                                      style: const TextStyle(fontSize: 16)),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 16.0),
-                                child: Chip(
-                                  backgroundColor: Colors.green[50],
-                                  label: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const Icon(Icons.paid, size: 25),
-                                      Text(
-                                        " Price: $price",
-                                        style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(height: 8),
-                              Row(
-                                children: [
-                                  const Icon(Icons.arrow_upward, size: 25),
-                                  Text(
-                                    " Highest: $high ($dateHigh)",
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                ],
-                              ),
-                              Container(height: 8),
-                              Row(
-                                children: [
-                                  const Icon(Icons.all_inclusive, size: 25),
-                                  Text(
-                                    " Market cap: ${item.marketCap}\$",
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                      return CurrencyItem(item: item, price: price, high: high, dateHigh: dateHigh);
                     });
 
                 return list;
               }
           }
         },
+      ),
+    );
+  }
+}
+
+class CurrencyItem extends StatelessWidget {
+  const CurrencyItem({
+    Key? key,
+    required this.item,
+    required this.price,
+    required this.high,
+    required this.dateHigh,
+  }) : super(key: key);
+
+  final CurrencyQuotaDto item;
+  final String price;
+  final String high;
+  final String dateHigh;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(12),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: SvgJpgCachedImage(item: item),
+                ),
+                Text("${item.symbol} - ",
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
+                Text(item.name,
+                    style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Chip(
+                backgroundColor: Colors.green[50],
+                label: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.paid, size: 25),
+                    Text(
+                      " Price: $price",
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.arrow_upward, size: 25),
+                Text(
+                  " Highest: $high ($dateHigh)",
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontStyle: FontStyle.italic),
+                ),
+              ],
+            ),
+            Container(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.all_inclusive, size: 25),
+                Text(
+                  " Market cap: ${item.marketCap}\$",
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontStyle: FontStyle.italic),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

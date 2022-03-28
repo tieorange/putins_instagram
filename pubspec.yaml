@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^1.0.3
   cached_network_image:
   font_awesome_flutter: ^10.1.0
+  device_preview: ^1.0.0
 
 
 # TODO: fix versions:  https://github.com/trevorwang/retrofit.dart/blob/master/flutter_example/pubspec.yaml
