@@ -36,7 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.4
   dio:
   retrofit:
-  json_annotation: ^4.0.0
   logger: ^1.1.0
   flutter_svg: ^1.0.3
   cached_network_image:
@@ -52,7 +51,7 @@ dev_dependencies:
     sdk: flutter
   retrofit_generator:
   build_runner: ^2.0.1
-  json_serializable: ^4.0.3
+  json_serializable: ^6.1.5
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
